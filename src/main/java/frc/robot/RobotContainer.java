@@ -4,15 +4,16 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.claw.*;
 import frc.robot.commands.drivetrain.*;
-import frc.robot.commands.vision.AprilTagPID;
+import frc.robot.commands.elevator.*;
+import frc.robot.commands.vision.*;
 import org.photonvision.PhotonCamera;
 
 /**
@@ -23,10 +24,12 @@ import org.photonvision.PhotonCamera;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final Pigeon2 pigeon = new Pigeon2(0);
   private final Drivetrain drivetrain = new Drivetrain();
-  private final AHRS navx = new AHRS(SPI.Port.kMXP);
   private final PhotonCamera camera = new PhotonCamera("Photonvision");
   private final XboxController controller = new XboxController(0);
+  private final Claw claw = new Claw();
+  private final Elevator elevator = new Elevator();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -42,7 +45,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller, XboxController.Button.kA.value).whenPressed(new AprilTagPID(drivetrain, camera, navx, 1540));
+    new JoystickButton(controller, XboxController.Button.kX.value)
+            .whenPressed(new AprilTagPIDTurn(drivetrain, camera, pigeon, 154));
+    new JoystickButton(controller, XboxController.Button.kB.value)
+            .whenPressed(new InstantCommand(claw::toggleClosed, claw));
+    new JoystickButton(controller, XboxController.Button.kY.value)
+            .whenPressed(new MoveToTop(elevator));
+    new JoystickButton(controller, XboxController.Button.kA.value)
+            .whenPressed(new MoveToBottom(elevator));
   }
 
   /**
