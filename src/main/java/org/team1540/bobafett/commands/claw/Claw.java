@@ -1,4 +1,4 @@
-package frc.robot.commands.claw;
+package org.team1540.commands.claw;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;

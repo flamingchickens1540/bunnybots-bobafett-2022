@@ -1,9 +1,9 @@
-package frc.robot.commands.vision;
+package org.team1540.commands.vision;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.drivetrain.Drivetrain;
+import org.team1540.commands.drivetrain.Drivetrain;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -35,7 +35,7 @@ public class AprilTagPIDTurn extends CommandBase {
 
     @Override
     public void initialize() {
-        drivetrain.resetHeading();
+        pigeon.setYaw(0);
         PhotonPipelineResult result = camera.getLatestResult();
         if (result.hasTargets()) {
             List<PhotonTrackedTarget> targets = result.getTargets();

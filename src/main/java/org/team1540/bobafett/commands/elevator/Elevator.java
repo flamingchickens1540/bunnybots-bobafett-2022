@@ -1,4 +1,4 @@
-package frc.robot.commands.elevator;
+package org.team1540.commands.elevator;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -17,7 +17,7 @@ public class Elevator extends SubsystemBase {
     private double originalPosition;
 
     public Elevator() {
-        motor.setInverted(false);
+        motor.setInverted(true);
         motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 

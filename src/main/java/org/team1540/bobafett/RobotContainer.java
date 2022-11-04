@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package org.team1540;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -15,6 +15,13 @@ import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.elevator.*;
 import frc.robot.commands.vision.*;
 import org.photonvision.PhotonCamera;
+import org.team1540.commands.claw.Claw;
+import org.team1540.commands.drivetrain.Drivetrain;
+import org.team1540.commands.drivetrain.TankDrive;
+import org.team1540.commands.elevator.Elevator;
+import org.team1540.commands.elevator.MoveToBottom;
+import org.team1540.commands.elevator.MoveToTop;
+import org.team1540.commands.vision.AprilTagPIDTurn;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

@@ -1,4 +1,4 @@
-package frc.robot.commands.drivetrain;
+package org.team1540.commands.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -18,8 +18,8 @@ public class Drivetrain extends SubsystemBase {
     private final Pigeon2 pigeon = new Pigeon2(0);
 
     public Drivetrain() {
-        for (VictorSPX motor : leftDrive) motor.setInverted(false);
-        for (VictorSPX motor : rightDrive) motor.setInverted(true);
+        for (VictorSPX motor : leftDrive) motor.setInverted(true);
+        for (VictorSPX motor : rightDrive) motor.setInverted(false);
         for (VictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Brake);
         leftRear.follow(leftFront);
         rightRear.follow(rightFront);
@@ -28,10 +28,6 @@ public class Drivetrain extends SubsystemBase {
     public void setPercent(double left, double right) {
         leftFront.set(ControlMode.PercentOutput, left);
         rightFront.set(ControlMode.PercentOutput, right);
-    }
-
-    public void resetHeading() {
-        pigeon.setYaw(0);
     }
 
     public void stop() {
