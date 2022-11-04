@@ -1,12 +1,13 @@
-package org.team1540.commands.vision;
+package org.team1540.bobafett.commands.vision;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import org.team1540.commands.drivetrain.Drivetrain;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
+import org.team1540.bobafett.Constants;
+import org.team1540.bobafett.commands.drivetrain.Drivetrain;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class AprilTagPIDTurn extends CommandBase {
     private final Drivetrain drivetrain;
     private final PhotonCamera camera;
     private final Pigeon2 pigeon; // Haven't tested this yet
-    private final PIDController pid = new PIDController(0.02, 0, 0); // This somehow works without the i and d
+    private final PIDController pid = new PIDController(
+            Constants.VisionConstants.KP, Constants.VisionConstants.KI, Constants.VisionConstants.KD); // This somehow works without the i and d
     private final int targetId;
     private double setpoint;
     private boolean finished;

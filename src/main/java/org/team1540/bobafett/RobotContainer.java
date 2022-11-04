@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package org.team1540;
+package org.team1540.bobafett;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -10,18 +10,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.claw.*;
-import frc.robot.commands.drivetrain.*;
-import frc.robot.commands.elevator.*;
-import frc.robot.commands.vision.*;
 import org.photonvision.PhotonCamera;
-import org.team1540.commands.claw.Claw;
-import org.team1540.commands.drivetrain.Drivetrain;
-import org.team1540.commands.drivetrain.TankDrive;
-import org.team1540.commands.elevator.Elevator;
-import org.team1540.commands.elevator.MoveToBottom;
-import org.team1540.commands.elevator.MoveToTop;
-import org.team1540.commands.vision.AprilTagPIDTurn;
+import org.team1540.bobafett.commands.claw.Claw;
+import org.team1540.bobafett.commands.drivetrain.Drivetrain;
+import org.team1540.bobafett.commands.drivetrain.TankDrive;
+import org.team1540.bobafett.commands.elevator.Elevator;
+import org.team1540.bobafett.commands.elevator.MoveToBottom;
+import org.team1540.bobafett.commands.elevator.MoveToTop;
+import org.team1540.bobafett.commands.vision.AprilTagPIDTurn;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,7 +29,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Pigeon2 pigeon = new Pigeon2(0);
   private final Drivetrain drivetrain = new Drivetrain();
-  private final PhotonCamera camera = new PhotonCamera("Photonvision");
+  private final PhotonCamera camera = new PhotonCamera(Constants.VisionConstants.CAMERA_NAME);
   private final XboxController controller = new XboxController(0);
   private final Claw claw = new Claw();
   private final Elevator elevator = new Elevator();

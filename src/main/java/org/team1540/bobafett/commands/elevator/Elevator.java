@@ -1,4 +1,4 @@
-package org.team1540.commands.elevator;
+package org.team1540.bobafett.commands.elevator;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -6,14 +6,16 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.team1540.bobafett.Constants;
 
 public class Elevator extends SubsystemBase {
 
-    private final CANSparkMax motor = new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless);
+    private final CANSparkMax motor = new CANSparkMax(
+            Constants.ElevatorConstants.MOTOR_ID, CANSparkMaxLowLevel.MotorType.kBrushless);
     private final RelativeEncoder encoder = motor.getEncoder();
     private final SparkMaxPIDController pidController = motor.getPIDController();
-    private final DigitalInput topLimitSwitch = new DigitalInput(1);
-    private final DigitalInput bottomLimitSwitch = new DigitalInput(0);
+    private final DigitalInput topLimitSwitch = new DigitalInput(Constants.ElevatorConstants.TOP_LIMIT_SWITCH_ID);
+    private final DigitalInput bottomLimitSwitch = new DigitalInput(Constants.ElevatorConstants.BOTTOM_LIMIT_SWITCH_ID);
     private double originalPosition;
 
     public Elevator() {
