@@ -24,6 +24,14 @@ public class Drivetrain extends SubsystemBase {
         rightRear.follow(rightFront);
     }
 
+    public Drivetrain(NeutralMode brakeType) {
+        for (VictorSPX motor : leftDrive) motor.setInverted(true);
+        for (VictorSPX motor : rightDrive) motor.setInverted(false);
+        for (VictorSPX motor : drive) motor.setNeutralMode(brakeType);
+        leftRear.follow(leftFront);
+        rightRear.follow(rightFront);
+    }
+
     public void setPercent(double left, double right) {
         leftFront.set(ControlMode.PercentOutput, left);
         rightFront.set(ControlMode.PercentOutput, right);

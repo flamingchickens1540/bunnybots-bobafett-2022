@@ -3,6 +3,8 @@ package org.team1540.bobafett.commands.drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/** Standard drive, left stick controls left side of drivetrain, right stick controls right side.
+ */
 public class TankDrive extends CommandBase {
 
     private final Drivetrain drivetrain;

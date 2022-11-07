@@ -13,7 +13,7 @@ public class Elevator extends SubsystemBase {
     private final CANSparkMax motor = new CANSparkMax(
             Constants.ElevatorConstants.MOTOR_ID, CANSparkMaxLowLevel.MotorType.kBrushless);
     private final RelativeEncoder encoder = motor.getEncoder();
-    private final SparkMaxPIDController pidController = motor.getPIDController();
+    private final SparkMaxPIDController pidController = motor.getPIDController(); // Use this to write an elevator pid
     private final DigitalInput topLimitSwitch = new DigitalInput(Constants.ElevatorConstants.TOP_LIMIT_SWITCH_ID);
     private final DigitalInput bottomLimitSwitch = new DigitalInput(Constants.ElevatorConstants.BOTTOM_LIMIT_SWITCH_ID);
     private double originalPosition;
