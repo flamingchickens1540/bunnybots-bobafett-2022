@@ -4,14 +4,15 @@
 
 package org.team1540.bobafett;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.photonvision.PhotonCamera;
 import org.team1540.bobafett.commands.claw.Claw;
+import org.team1540.bobafett.commands.claw.CloseClaw;
 import org.team1540.bobafett.commands.drivetrain.Drivetrain;
 import org.team1540.bobafett.commands.drivetrain.TankDrive;
 import org.team1540.bobafett.commands.elevator.Elevator;
@@ -28,7 +29,7 @@ import org.team1540.bobafett.commands.vision.AprilTagPIDTurn;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Pigeon2 pigeon = new Pigeon2(0);
-  private final Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain = new Drivetrain(NeutralMode.Coast);
   private final PhotonCamera camera = new PhotonCamera(Constants.VisionConstants.CAMERA_NAME);
   private final XboxController controller = new XboxController(0);
   private final Claw claw = new Claw();
@@ -52,7 +53,7 @@ public class RobotContainer {
     new JoystickButton(controller, XboxController.Button.kX.value)
             .whenPressed(new AprilTagPIDTurn(drivetrain, camera, pigeon, Constants.VisionConstants.APRIL_TAG_ID));
     new JoystickButton(controller, XboxController.Button.kB.value)
-            .whenPressed(new InstantCommand(claw::toggleClosed, claw));
+            .whileActiveContinuous(new CloseClaw(claw));
     new JoystickButton(controller, XboxController.Button.kY.value)
             .whenPressed(new MoveToTop(elevator));
     //new JoystickButton(controller, XboxController.Button.kA.value)

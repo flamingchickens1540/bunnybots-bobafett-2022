@@ -13,7 +13,7 @@ public class Claw extends SubsystemBase {
     private final Solenoid solenoid = new Solenoid(
             0, PneumaticsModuleType.CTREPCM, Constants.ClawConstants.SOLENOID_CHANNEL);
 
-    public void toggleClosed() {
-        solenoid.set(!solenoid.get());
+    public void set(boolean open) {
+        solenoid.set(!open);
     }
 }

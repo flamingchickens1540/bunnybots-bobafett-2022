@@ -26,7 +26,7 @@ Left trigger: move elevator up
 
 Right trigger: move elevator down
 
-B button: open/close claw
+B button: hold to close claw
 
 X button: Turn to an AprilTag with id of 154 (Camera not installed yet, doesn't work)
 
