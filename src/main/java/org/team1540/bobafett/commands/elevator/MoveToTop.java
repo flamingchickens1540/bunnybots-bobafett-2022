@@ -13,7 +13,7 @@ public class MoveToTop extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         elevator.setPercent(0.25);
     }
 

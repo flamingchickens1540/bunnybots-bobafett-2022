@@ -11,14 +11,17 @@ public class MoveToBottom extends CommandBase {
         addRequirements(elevator);
     }
 
-    public void execute() {
+    @Override
+    public void initialize() {
         elevator.setPercent(0.25);
     }
 
+    @Override
     public boolean isFinished() {
         return elevator.getBottomLimitSwitch();
     }
 
+    @Override
     public void end(boolean interrupted) {
         elevator.stop();
     }

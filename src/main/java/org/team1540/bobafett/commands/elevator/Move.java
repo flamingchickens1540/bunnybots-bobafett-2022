@@ -16,7 +16,6 @@ public class Move extends CommandBase {
 
     @Override
     public void execute() {
-        //System.out.println(controller.getLeftTriggerAxis());
         System.out.println(elevator.getRotations());
         elevator.setPercent(controller.getLeftTriggerAxis()*0.5 - controller.getRightTriggerAxis()*0.5);
     }
