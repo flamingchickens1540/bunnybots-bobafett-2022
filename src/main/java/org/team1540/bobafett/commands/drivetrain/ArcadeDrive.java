@@ -18,8 +18,8 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void execute() {
-        double throttle = 0.5*controller.getLeftY();
-        double turn = 0.5*controller.getRightX();
+        double throttle = 0.5*controller.getRightX();
+        double turn = 0.5*controller.getLeftY();
         drivetrain.setPercent(turn - throttle, turn + throttle);
     }
 }

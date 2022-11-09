@@ -24,6 +24,7 @@ public final class Constants {
         public static final int MOTOR_ID = 5;
         public static final int TOP_LIMIT_SWITCH_ID = 0;
         public static final int BOTTOM_LIMIT_SWITCH_ID = 1;
+        public static final double DEFAULT_CONST_SPEED = 0.04;
     }
 
     public static final class ClawConstants {

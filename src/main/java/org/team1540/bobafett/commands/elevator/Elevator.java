@@ -44,8 +44,10 @@ public class Elevator extends SubsystemBase {
     }
 
     public void setPercent(double speed) {
-        if (speed > 0 && topLimitSwitch.get() || speed < 0 && bottomLimitSwitch.get()) motor.set(0);
-        else motor.set(speed);
+        if (topLimitSwitch.get() || speed < 0) motor.set(speed + Constants.ElevatorConstants.DEFAULT_CONST_SPEED);
+        else {
+            motor.set(0 + Constants.ElevatorConstants.DEFAULT_CONST_SPEED);
+        }
     }
 
     public void stop() {

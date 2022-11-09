@@ -19,7 +19,7 @@ public class MoveToTop extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return elevator.getTopLimitSwitch();
+        return !elevator.getTopLimitSwitch();
     }
 
     @Override

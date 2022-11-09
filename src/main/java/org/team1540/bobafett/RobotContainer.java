@@ -15,7 +15,7 @@ import org.team1540.bobafett.commands.claw.Claw;
 import org.team1540.bobafett.commands.drivetrain.Drivetrain;
 import org.team1540.bobafett.commands.drivetrain.TankDrive;
 import org.team1540.bobafett.commands.elevator.Elevator;
-import org.team1540.bobafett.commands.elevator.MoveToBottom;
+import org.team1540.bobafett.commands.elevator.Move;
 import org.team1540.bobafett.commands.elevator.MoveToTop;
 import org.team1540.bobafett.commands.vision.AprilTagPIDTurn;
 
@@ -39,6 +39,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     drivetrain.setDefaultCommand(new TankDrive(drivetrain, controller));
+    elevator.setDefaultCommand(new Move(elevator, controller));
   }
 
   /**
@@ -54,8 +55,8 @@ public class RobotContainer {
             .whenPressed(new InstantCommand(claw::toggleClosed, claw));
     new JoystickButton(controller, XboxController.Button.kY.value)
             .whenPressed(new MoveToTop(elevator));
-    new JoystickButton(controller, XboxController.Button.kA.value)
-            .whenPressed(new MoveToBottom(elevator));
+    //new JoystickButton(controller, XboxController.Button.kA.value)
+    //        .whenPressed(new MoveToBottom(elevator));
   }
 
   /**
