@@ -1,10 +1,6 @@
 package org.team1540.bobafett.commands.elevator;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.wpilibj.DigitalInput;
+import com.revrobotics.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team1540.bobafett.Constants;
 
@@ -14,43 +10,44 @@ public class Elevator extends SubsystemBase {
             Constants.ElevatorConstants.MOTOR_ID, CANSparkMaxLowLevel.MotorType.kBrushless);
     private final RelativeEncoder encoder = motor.getEncoder();
     private final SparkMaxPIDController pidController = motor.getPIDController(); // Use this to write an elevator pid
-    private final DigitalInput topLimitSwitch = new DigitalInput(Constants.ElevatorConstants.TOP_LIMIT_SWITCH_ID);
-    private final DigitalInput bottomLimitSwitch = new DigitalInput(Constants.ElevatorConstants.BOTTOM_LIMIT_SWITCH_ID);
-    private double originalPosition;
+    private final SparkMaxLimitSwitch topLimitSwitch = motor.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+    private final SparkMaxLimitSwitch bottomLimitSwitch = motor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
     public Elevator() {
         motor.setInverted(true);
         motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-    }
-
-    public void setOriginalPosition(double position) {
-        originalPosition = position;
+        encoder.setPosition(124);
+        pidController.setP(Constants.ElevatorConstants.ELEVATOR_KP);
+        pidController.setI(Constants.ElevatorConstants.ELEVATOR_KI);
+        pidController.setD(Constants.ElevatorConstants.ELEVATOR_KD);
     }
 
     public boolean getTopLimitSwitch() {
-        return topLimitSwitch.get();
+        return topLimitSwitch.isPressed();
     }
 
     public boolean getBottomLimitSwitch() {
-        return bottomLimitSwitch.get();
+        return bottomLimitSwitch.isPressed();
     }
 
     public double getRotations() {
         return encoder.getPosition();
     }
 
-    public double getRotationsFromTop() {
-        return encoder.getPosition() - originalPosition;
+    public void setPercent(double speed) {
+        if (getTopLimitSwitch() && speed > 0) {
+            encoder.setPosition(0);
+            stop();
+        } else if (getBottomLimitSwitch() && speed < 0) {
+            stop();
+        } else motor.set(speed);
     }
 
-    public void setPercent(double speed) {
-        if (topLimitSwitch.get() || speed < 0) motor.set(speed + Constants.ElevatorConstants.DEFAULT_CONST_SPEED);
-        else {
-            motor.set(0 + Constants.ElevatorConstants.DEFAULT_CONST_SPEED);
-        }
+    public void setPidReference(double setpoint, CANSparkMax.ControlType controlType) {
+        pidController.setReference(setpoint, controlType);
     }
 
     public void stop() {
-        setPercent(0);
+        motor.set(Constants.ElevatorConstants.DEFAULT_CONST_SPEED);
     }
 }

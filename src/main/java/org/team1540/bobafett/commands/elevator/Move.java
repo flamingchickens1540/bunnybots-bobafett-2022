@@ -2,6 +2,7 @@ package org.team1540.bobafett.commands.elevator;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.team1540.bobafett.Constants;
 
 public class Move extends CommandBase {
 
@@ -17,6 +18,6 @@ public class Move extends CommandBase {
     @Override
     public void execute() {
         System.out.println(elevator.getRotations());
-        elevator.setPercent(controller.getLeftTriggerAxis()*0.5 - controller.getRightTriggerAxis()*0.5);
+        elevator.setPercent(controller.getLeftTriggerAxis()*0.5 - controller.getRightTriggerAxis()*0.5 + Constants.ElevatorConstants.DEFAULT_CONST_SPEED);
     }
 }

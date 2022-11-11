@@ -1,4 +1,4 @@
-package org.team1540.bobafett.commands.vision;
+package org.team1540.bobafett.commands.drivetrain;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.controller.PIDController;
@@ -7,7 +7,6 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.team1540.bobafett.Constants;
-import org.team1540.bobafett.commands.drivetrain.Drivetrain;
 
 import java.util.List;
 

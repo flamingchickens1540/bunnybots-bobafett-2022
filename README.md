@@ -26,8 +26,10 @@ Left trigger: move elevator up
 
 Right trigger: move elevator down
 
+A button: move elvator to bottom limit switch
+
 B button: hold to close claw
 
 X button: Turn to an AprilTag with id of 154 (Camera not installed yet, doesn't work)
 
-Y: Move elevator to the top limit switch
+Y button: Move elevator to the top limit switch

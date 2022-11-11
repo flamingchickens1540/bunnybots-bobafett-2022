@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.photonvision.PhotonCamera;
 import org.team1540.bobafett.commands.claw.Claw;
 import org.team1540.bobafett.commands.claw.CloseClaw;
+import org.team1540.bobafett.commands.drivetrain.ArcadeDrive;
 import org.team1540.bobafett.commands.drivetrain.Drivetrain;
 import org.team1540.bobafett.commands.drivetrain.TankDrive;
 import org.team1540.bobafett.commands.elevator.Elevator;
 import org.team1540.bobafett.commands.elevator.Move;
+import org.team1540.bobafett.commands.elevator.MoveToBottom;
 import org.team1540.bobafett.commands.elevator.MoveToTop;
-import org.team1540.bobafett.commands.vision.AprilTagPIDTurn;
+import org.team1540.bobafett.commands.drivetrain.AprilTagPIDTurn;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -39,7 +41,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    drivetrain.setDefaultCommand(new TankDrive(drivetrain, controller));
+    drivetrain.setDefaultCommand(new ArcadeDrive(drivetrain, controller));
     elevator.setDefaultCommand(new Move(elevator, controller));
   }
 
@@ -56,8 +58,8 @@ public class RobotContainer {
             .whileActiveContinuous(new CloseClaw(claw));
     new JoystickButton(controller, XboxController.Button.kY.value)
             .whenPressed(new MoveToTop(elevator));
-    //new JoystickButton(controller, XboxController.Button.kA.value)
-    //        .whenPressed(new MoveToBottom(elevator));
+    new JoystickButton(controller, XboxController.Button.kA.value)
+            .whenPressed(new MoveToBottom(elevator));
   }
 
   /**
