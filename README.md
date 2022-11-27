@@ -8,11 +8,13 @@ Fett uses a claw to pick up tubes and bunnies off the ground, and an elevator to
 
 ### Claw
 
-The [claw subsystem](src/main/java/org/team1540/bobafett/commands/claw/Claw.java) is a pneumatics controlled claw that is used to grab tubes and bunnies.
+The [claw subsystem](src/main/java/org/team1540/bobafett/commands/claw/Claw.java) is a pneumatics controlled claw that 
+is used to grab tubes and bunnies.
 
 ### Elevator
 
-The [elevator subsystem](src/main/java/org/team1540/bobafett/commands/elevator/Elevator.java) is a motorized elevator using a Spark Max motor controller and a brushless motor.
+The [elevator subsystem](src/main/java/org/team1540/bobafett/commands/elevator/Elevator.java) is a motorized elevator 
+using a Spark Max motor controller and a brushless motor.
 
 ## Controller Bindings
 
@@ -22,9 +24,9 @@ Left stick: move left side of drivetrain
 
 Right stick: move right side of drivetrain
 
-Left trigger: move elevator up
+Left bumper: move elevator to lower hold position
 
-Right trigger: move elevator down
+Right bumper: move elevator to upper hold position
 
 A button: move elvator to bottom limit switch
 
