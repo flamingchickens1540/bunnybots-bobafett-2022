@@ -13,7 +13,7 @@ public class MoveToBottom extends CommandBase {
 
     @Override
     public void initialize() {
-        elevator.setPercent(-0.25);
+        elevator.setPercent(-0.5);
     }
 
     @Override
@@ -24,5 +24,6 @@ public class MoveToBottom extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         elevator.stop();
+        elevator.setReferencePosition();
     }
 }

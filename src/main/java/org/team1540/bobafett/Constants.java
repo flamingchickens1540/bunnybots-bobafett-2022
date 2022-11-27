@@ -22,10 +22,10 @@ public final class Constants {
 
     public static final class ElevatorConstants {
         public static final int MOTOR_ID = 5;
-        public static final double DEFAULT_CONST_SPEED = 0.04;
+        public static final double ELEVATOR_HOLD_SPEED = 0.04;
         public static final double ELEVATOR_KP = 0.10843;
-        public static final double ELEVATOR_KI = 0;
-        public static final double ELEVATOR_KD = 0;
+        public static final double ELEVATOR_KI = 0.0000004;
+        public static final double ELEVATOR_KD = 6;
     }
 
     public static final class ClawConstants {
