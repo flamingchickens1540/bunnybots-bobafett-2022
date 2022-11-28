@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ArcadeDrive extends CommandBase {
     private final XboxController controller;
     private final Drivetrain drivetrain;
+    private final double deadzone = 0.15;
 
     public ArcadeDrive(Drivetrain drivetrain, XboxController controller) {
         this.controller = controller;
@@ -18,8 +19,8 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void execute() {
-        double throttle = 0.5*controller.getRightX();
-        double turn = 0.5*controller.getLeftY();
+        double throttle = Math.abs(controller.getRightX()) > deadzone ? 0.5*controller.getRightX() : 0;
+        double turn = Math.abs(controller.getLeftY()) > deadzone ? 0.5*controller.getLeftY() : 0;
         drivetrain.setPercent(turn - throttle, turn + throttle);
     }
 

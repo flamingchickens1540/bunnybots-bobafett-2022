@@ -10,6 +10,7 @@ public class TankDrive extends CommandBase {
 
     private final Drivetrain drivetrain;
     private final XboxController controller;
+    private final double deadzone = 0.15;
 
     public TankDrive(Drivetrain drivetrain, XboxController controller) {
         this.drivetrain = drivetrain;
@@ -19,7 +20,9 @@ public class TankDrive extends CommandBase {
 
     @Override
     public void execute() {
-        drivetrain.setPercent(controller.getLeftY() * 0.5, controller.getRightY() * 0.5);
+        double left = Math.abs(controller.getLeftY()) > deadzone ? controller.getLeftY() * 0.5 : 0;
+        double right = Math.abs(controller.getRightY()) > deadzone ? controller.getRightY() * 0.5 : 0;
+        drivetrain.setPercent(left, right);
     }
 
     @Override
