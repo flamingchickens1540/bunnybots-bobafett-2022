@@ -22,7 +22,7 @@ public class MoveToTop extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean isInterrupted) {
         elevator.hold();
     }
 }

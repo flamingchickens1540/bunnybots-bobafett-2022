@@ -19,7 +19,8 @@ public class ElevatorPID extends CommandBase {
         elevator.setPidReference(setpoint, CANSparkMax.ControlType.kPosition); // Not sure if I need to continuously call this
     }
 
-    public void end(boolean interrupted) {
-        elevator.stop();
+    public void end(boolean isInterrupted) {
+        if (isInterrupted) elevator.stop();
+        else elevator.hold();
     }
 }

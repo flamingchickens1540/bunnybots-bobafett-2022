@@ -22,4 +22,9 @@ public class ArcadeDrive extends CommandBase {
         double turn = 0.5*controller.getLeftY();
         drivetrain.setPercent(turn - throttle, turn + throttle);
     }
+
+    @Override
+    public void end(boolean isInterrupted) {
+        drivetrain.stop();
+    }
 }

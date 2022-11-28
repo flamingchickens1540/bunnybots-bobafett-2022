@@ -3,7 +3,8 @@ package org.team1540.bobafett.commands.drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** Standard drive, left stick controls left side of drivetrain, right stick controls right side.
+/**
+ * Standard drive, left stick controls left side of drivetrain, right stick controls right side.
  */
 public class TankDrive extends CommandBase {
 
@@ -19,5 +20,10 @@ public class TankDrive extends CommandBase {
     @Override
     public void execute() {
         drivetrain.setPercent(controller.getLeftY() * 0.5, controller.getRightY() * 0.5);
+    }
+
+    @Override
+    public void end(boolean isInterrupted) {
+        drivetrain.stop();
     }
 }

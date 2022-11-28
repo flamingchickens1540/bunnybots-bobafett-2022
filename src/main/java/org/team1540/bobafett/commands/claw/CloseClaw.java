@@ -16,7 +16,7 @@ public class CloseClaw extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean isInterrupted) {
         claw.set(false);
     }
 }

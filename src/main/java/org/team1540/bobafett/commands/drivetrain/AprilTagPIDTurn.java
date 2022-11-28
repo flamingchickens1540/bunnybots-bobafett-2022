@@ -73,7 +73,7 @@ public class AprilTagPIDTurn extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean isInterrupted) {
         drivetrain.stop();
     }
 }

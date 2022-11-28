@@ -11,9 +11,14 @@ import org.team1540.bobafett.Constants;
 
 public class Claw extends SubsystemBase {
     private final Solenoid solenoid = new Solenoid(
-            0, PneumaticsModuleType.CTREPCM, Constants.ClawConstants.SOLENOID_CHANNEL);
+            0, PneumaticsModuleType.CTREPCM, Constants.ClawConstants.SOLENOID_CHANNEL
+    );
 
-    public void set(boolean open) {
-        solenoid.set(!open);
+    public Claw() {
+        set(true);
+    }
+
+    public void set(boolean isOpen) {
+        solenoid.set(!isOpen);
     }
 }
