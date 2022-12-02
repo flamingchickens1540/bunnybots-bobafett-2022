@@ -1,14 +1,10 @@
 package org.team1540.bobafett.commands.drivetrain;
 
-import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.team1540.bobafett.Constants;
-
-import java.util.List;
+import org.team1540.bobafett.utils.ChickenPhotonCamera;
 
 /**
  * Command for turning the robot towards an AprilTag with a specified fiducial ID
@@ -18,8 +14,7 @@ import java.util.List;
 public class AprilTagPIDTurn extends CommandBase {
 
     private final Drivetrain drivetrain;
-    private final PhotonCamera camera;
-    private final Pigeon2 pigeon;
+    private final ChickenPhotonCamera camera;
     private final PIDController pid = new PIDController(
             Constants.VisionConstants.KP, Constants.VisionConstants.KI, Constants.VisionConstants.KD); // This somehow works without the i and d
     private final int targetId;
@@ -27,32 +22,25 @@ public class AprilTagPIDTurn extends CommandBase {
     private boolean targetFound = false;
     private boolean finished = false;
 
-    public AprilTagPIDTurn(Drivetrain drivetrain, PhotonCamera camera, Pigeon2 pigeon, int targetId) {
+    public AprilTagPIDTurn(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetId) {
         this.drivetrain = drivetrain;
         this.camera = camera;
-        this.pigeon = pigeon;
-        this.setpoint = pigeon.getYaw();
+        this.setpoint = drivetrain.getYaw();
         this.targetId = targetId;
         addRequirements(drivetrain);
     }
 
     /** Looks for the target that we are searching for in what the camera can see currently.
-     * If we find the target with the fiducial id specified in the contructor, we set its
+     * If we find the target with the fiducial id specified in the constructor, we set its
      * current yaw (degree angle away from the camera) to be the setpoint for the pid.*/
     @Override
     public void initialize() {
-        pigeon.setYaw(0);
-        PhotonPipelineResult result = camera.getLatestResult();
-        if (result.hasTargets()) {
-            List<PhotonTrackedTarget> targets = result.getTargets();
-            for (PhotonTrackedTarget target : targets) {
-                if (target.getFiducialId() == targetId) {
-                    setpoint = target.getYaw();
-                    targetFound = true;
-                    break;
-                }
-            }
-        }
+        drivetrain.setYaw(0);
+        PhotonTrackedTarget target = camera.getTarget(targetId);
+        if (target != null) {
+            setpoint = target.getYaw();
+            targetFound = true;
+        } else setpoint = 0;
     }
 
     /** If we are not within 1.5 degrees of the target and if we have found a target,
@@ -61,8 +49,8 @@ public class AprilTagPIDTurn extends CommandBase {
      */
     @Override
     public void execute() {
-        if (!finished && Math.abs(pigeon.getYaw() - setpoint) > 1.5 && targetFound) {
-            double output = pid.calculate(pigeon.getYaw(), setpoint);
+        if (!finished && Math.abs(drivetrain.getYaw() - setpoint) > 1.5 && targetFound) {
+            double output = pid.calculate(drivetrain.getYaw(), setpoint);
             drivetrain.setPercent(output, -1*output);
         } else finished = true;
     }

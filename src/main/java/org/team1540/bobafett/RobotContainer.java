@@ -4,20 +4,22 @@
 
 package org.team1540.bobafett;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.photonvision.PhotonCamera;
-import org.team1540.bobafett.commands.claw.Claw;
-import org.team1540.bobafett.commands.claw.CloseClaw;
-import org.team1540.bobafett.commands.drivetrain.ArcadeDrive;
+import org.team1540.bobafett.commands.claw.*;
 import org.team1540.bobafett.commands.drivetrain.Drivetrain;
 import org.team1540.bobafett.commands.drivetrain.TankDrive;
 import org.team1540.bobafett.commands.elevator.*;
 import org.team1540.bobafett.commands.drivetrain.AprilTagPIDTurn;
+import org.team1540.bobafett.utils.ChickenPhotonCamera;
+
+import java.util.function.BiConsumer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,8 +30,8 @@ import org.team1540.bobafett.commands.drivetrain.AprilTagPIDTurn;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final Pigeon2 pigeon = new Pigeon2(0);
-    private final Drivetrain drivetrain = new Drivetrain();
-    private final PhotonCamera camera = new PhotonCamera(Constants.VisionConstants.CAMERA_NAME);
+    private final Drivetrain drivetrain = new Drivetrain(pigeon);
+    private final ChickenPhotonCamera camera = new ChickenPhotonCamera(Constants.VisionConstants.CAMERA_NAME);
     private final XboxController controller = new XboxController(0);
     private final Claw claw = new Claw();
     private final Elevator elevator = new Elevator();
@@ -49,15 +51,15 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         new JoystickButton(controller, XboxController.Button.kX.value)
-                .whenPressed(new AprilTagPIDTurn(drivetrain, camera, pigeon, Constants.VisionConstants.APRIL_TAG_ID));
+                .whenPressed(new AprilTagPIDTurn(drivetrain, camera, Constants.VisionConstants.APRIL_TAG_ID));
         new JoystickButton(controller, XboxController.Button.kB.value)
                 .whileActiveContinuous(new CloseClaw(claw));
         new JoystickButton(controller, XboxController.Button.kY.value)
                 .whenPressed(new MoveToTop(elevator));
         new JoystickButton(controller, XboxController.Button.kLeftBumper.value)
-                .whenPressed(new ElevatorPID(elevator, 60));
+                .whenPressed(new InstantCommand(elevator::setPosition1)); // TODO adjust setpoints
         new JoystickButton(controller, XboxController.Button.kRightBumper.value)
-                .whenPressed(new ElevatorPID(elevator, 100));
+                .whenPressed(new InstantCommand(elevator::setPosition2));
         new JoystickButton(controller, XboxController.Button.kA.value)
                 .whenPressed(new MoveToBottom(elevator));
     }
