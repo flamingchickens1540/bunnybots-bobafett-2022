@@ -16,7 +16,7 @@ public class AprilTagPIDTurn extends CommandBase {
     private final Drivetrain drivetrain;
     private final ChickenPhotonCamera camera;
     private final PIDController pid = new PIDController(
-            Constants.VisionConstants.KP, Constants.VisionConstants.KI, Constants.VisionConstants.KD); // This somehow works without the i and d
+            Constants.DriveConstants.DRIVE_KP, Constants.DriveConstants.DRIVE_KI, Constants.DriveConstants.DRIVE_KD);
     private final int targetId;
     private double setpoint;
     private boolean targetFound = false;

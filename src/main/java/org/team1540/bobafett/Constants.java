@@ -18,6 +18,9 @@ public final class Constants {
         public static final int RIGHT_FRONT = 2;
         public static final int LEFT_REAR = 3;
         public static final int RIGHT_REAR = 4;
+        public static final double DRIVE_KP = 0.02;
+        public static final double DRIVE_KI = 0;
+        public static final double DRIVE_KD = 0;
     }
 
     public static final class ElevatorConstants {

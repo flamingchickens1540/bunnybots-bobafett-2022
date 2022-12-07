@@ -48,14 +48,6 @@ public class Elevator extends SubsystemBase {
         pidController.setReference(setpoint, controlType);
     }
 
-    public void setPosition1() {
-        setPidReference(60, CANSparkMax.ControlType.kPosition);
-    }
-
-    public void setPosition2() {
-        setPidReference(100, CANSparkMax.ControlType.kPosition);
-    }
-
     public void setReferencePosition() {
         encoder.setPosition(0);
     }
@@ -67,10 +59,5 @@ public class Elevator extends SubsystemBase {
     public void hold() {
         //motor.set(Constants.ElevatorConstants.ELEVATOR_HOLD_SPEED);
         pidController.setReference(getRotations(), CANSparkMax.ControlType.kPosition);
-    }
-
-    @Override
-    public void periodic() {
-        System.out.println(getBottomLimitSwitch() + " " + getTopLimitSwitch());
     }
 }

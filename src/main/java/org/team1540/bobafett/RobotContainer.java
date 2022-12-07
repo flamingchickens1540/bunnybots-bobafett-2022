@@ -11,15 +11,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import org.photonvision.PhotonCamera;
 import org.team1540.bobafett.commands.claw.*;
 import org.team1540.bobafett.commands.drivetrain.Drivetrain;
+import org.team1540.bobafett.commands.drivetrain.PigeonTurn;
 import org.team1540.bobafett.commands.drivetrain.TankDrive;
 import org.team1540.bobafett.commands.elevator.*;
 import org.team1540.bobafett.commands.drivetrain.AprilTagPIDTurn;
 import org.team1540.bobafett.utils.ChickenPhotonCamera;
-
-import java.util.function.BiConsumer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,7 +31,7 @@ public class RobotContainer {
     private final Drivetrain drivetrain = new Drivetrain(pigeon);
     private final ChickenPhotonCamera camera = new ChickenPhotonCamera(Constants.VisionConstants.CAMERA_NAME);
     private final XboxController controller = new XboxController(0);
-    private final Claw claw = new Claw();
+    final Claw claw = new Claw();
     private final Elevator elevator = new Elevator();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -51,15 +49,15 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         new JoystickButton(controller, XboxController.Button.kX.value)
-                .whenPressed(new AprilTagPIDTurn(drivetrain, camera, Constants.VisionConstants.APRIL_TAG_ID));
+                .whenPressed(new PigeonTurn(drivetrain, 90));
         new JoystickButton(controller, XboxController.Button.kB.value)
                 .whileActiveContinuous(new CloseClaw(claw));
         new JoystickButton(controller, XboxController.Button.kY.value)
                 .whenPressed(new MoveToTop(elevator));
         new JoystickButton(controller, XboxController.Button.kLeftBumper.value)
-                .whenPressed(new InstantCommand(elevator::setPosition1)); // TODO adjust setpoints
+                .whenPressed(() -> elevator.setPidReference(60, CANSparkMax.ControlType.kPosition)); // TODO adjust setpoints
         new JoystickButton(controller, XboxController.Button.kRightBumper.value)
-                .whenPressed(new InstantCommand(elevator::setPosition2));
+                .whenPressed(() -> elevator.setPidReference(100, CANSparkMax.ControlType.kPosition));
         new JoystickButton(controller, XboxController.Button.kA.value)
                 .whenPressed(new MoveToBottom(elevator));
     }
