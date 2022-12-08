@@ -9,14 +9,10 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.team1540.bobafett.commands.claw.*;
-import org.team1540.bobafett.commands.drivetrain.Drivetrain;
-import org.team1540.bobafett.commands.drivetrain.PigeonTurn;
-import org.team1540.bobafett.commands.drivetrain.TankDrive;
+import org.team1540.bobafett.commands.drivetrain.*;
 import org.team1540.bobafett.commands.elevator.*;
-import org.team1540.bobafett.commands.drivetrain.AprilTagPIDTurn;
 import org.team1540.bobafett.utils.ChickenPhotonCamera;
 
 /**
@@ -68,6 +64,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return null;
+        return new Auto(drivetrain, elevator, camera);
     }
 }

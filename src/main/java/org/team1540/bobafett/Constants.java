@@ -25,7 +25,6 @@ public final class Constants {
 
     public static final class ElevatorConstants {
         public static final int MOTOR_ID = 5;
-        public static final double ELEVATOR_HOLD_SPEED = 0.04;
         public static final double ELEVATOR_KP = 0.10843;
         public static final double ELEVATOR_KI = 0.0000004;
         public static final double ELEVATOR_KD = 6;
@@ -37,9 +36,7 @@ public final class Constants {
 
     public static final class VisionConstants{
         public static final String CAMERA_NAME = "Photonvision";
-        public static final double KP = 0.02;
-        public static final double KI = 0;
-        public static final double KD = 0;
         public static final int APRIL_TAG_ID = 154;
+        public static final int APRIL_TAG_AREA = 15;
     }
 }

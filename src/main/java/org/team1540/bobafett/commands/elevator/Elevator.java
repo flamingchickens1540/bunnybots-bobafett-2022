@@ -57,7 +57,12 @@ public class Elevator extends SubsystemBase {
     }
 
     public void hold() {
-        //motor.set(Constants.ElevatorConstants.ELEVATOR_HOLD_SPEED);
         pidController.setReference(getRotations(), CANSparkMax.ControlType.kPosition);
+    }
+
+    public void periodic() {
+        pidController.setP(SmartDashboard.getNumber("Elevator/kP", Constants.ElevatorConstants.ELEVATOR_KP));
+        pidController.setI(SmartDashboard.getNumber("Elevator/kI", Constants.ElevatorConstants.ELEVATOR_KI));
+        pidController.setD(SmartDashboard.getNumber("Elevator/kD", Constants.ElevatorConstants.ELEVATOR_KD));
     }
 }

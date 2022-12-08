@@ -8,6 +8,7 @@ public class CloseClaw extends CommandBase {
 
     public CloseClaw(Claw claw) {
         this.claw = claw;
+        addRequirements(claw);
     }
 
     @Override

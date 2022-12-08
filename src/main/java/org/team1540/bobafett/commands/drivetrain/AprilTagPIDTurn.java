@@ -19,8 +19,6 @@ public class AprilTagPIDTurn extends CommandBase {
             Constants.DriveConstants.DRIVE_KP, Constants.DriveConstants.DRIVE_KI, Constants.DriveConstants.DRIVE_KD);
     private final int targetId;
     private double setpoint;
-    private boolean targetFound = false;
-    private boolean finished = false;
 
     public AprilTagPIDTurn(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetId) {
         this.drivetrain = drivetrain;
@@ -39,8 +37,7 @@ public class AprilTagPIDTurn extends CommandBase {
         PhotonTrackedTarget target = camera.getTarget(targetId);
         if (target != null) {
             setpoint = target.getYaw();
-            targetFound = true;
-        } else setpoint = 0;
+        } else setpoint = drivetrain.getYaw(); // Set setpoint to current heading if no target is found
     }
 
     /** If we are not within 1.5 degrees of the target and if we have found a target,
@@ -49,15 +46,13 @@ public class AprilTagPIDTurn extends CommandBase {
      */
     @Override
     public void execute() {
-        if (!finished && Math.abs(drivetrain.getYaw() - setpoint) > 1.5 && targetFound) {
-            double output = pid.calculate(drivetrain.getYaw(), setpoint);
-            drivetrain.setPercent(output, -1*output);
-        } else finished = true;
+        double output = pid.calculate(drivetrain.getYaw(), setpoint);
+        drivetrain.setPercent(output, -1*output);
     }
 
     @Override
     public boolean isFinished() {
-        return finished;
+        return Math.abs(drivetrain.getYaw() - targetId) < 1.5;
     }
 
     @Override
