@@ -1,8 +1,7 @@
-package frc.robot.commands.elevator;
+package org.team1540.bobafett.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-// Use this command at the beginning of the match to set the original position of the elevator
 public class MoveToTop extends CommandBase {
 
     private final Elevator elevator;
@@ -13,8 +12,8 @@ public class MoveToTop extends CommandBase {
     }
 
     @Override
-    public void execute() {
-        elevator.setPercent(0.25);
+    public void initialize() {
+        elevator.setPercent(0.5);
     }
 
     @Override
@@ -23,8 +22,7 @@ public class MoveToTop extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        elevator.stop();
-        elevator.setOriginalPosition(elevator.getRotations());
+    public void end(boolean isInterrupted) {
+        elevator.hold();
     }
 }
