@@ -49,7 +49,7 @@ public class RobotContainer {
         new JoystickButton(pilotController, XboxController.Button.kX.value)
                 .whileActiveContinuous(new PigeonTurn(drivetrain, 90));
 
-        new JoystickButton(pilotController, XboxController.Button.kLeftStick.value)
+        new JoystickButton(pilotController, XboxController.Button.kA.value)
                 .whenPressed(drivetrain::toggleBrakeMode);
 
         new JoystickButton(copilotController, 1)
