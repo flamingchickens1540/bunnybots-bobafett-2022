@@ -13,11 +13,11 @@ public class CloseClaw extends CommandBase {
 
     @Override
     public void initialize() {
-        claw.set(true);
+        claw.set(false);
     }
 
     @Override
     public void end(boolean isInterrupted) {
-        claw.set(false);
+        claw.set(true);
     }
 }

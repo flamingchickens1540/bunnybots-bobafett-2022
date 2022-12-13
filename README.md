@@ -18,20 +18,30 @@ using a Spark Max motor controller and a brushless motor.
 
 ## Controller Bindings
 
-These controller bindings are temporary and are used only for testing
+### Pilot (Xbox controller)
 
-Left stick: move left side of drivetrain
+Left stick: move left side of drivetrain forwards/backwards
 
-Right stick: move right side of drivetrain
+Right stick: move right side of drivetrain forwards/backwards
 
-Left bumper: move elevator to lower hold position
+Left stick button: toggle brake mode
 
-Right bumper: move elevator to upper hold position
+Left bumper: move robot backwards
 
-A button: move elvator to bottom limit switch
+Right bumper: move robot forwards
 
-B button: hold to close claw
+### Copilot (Joystick)
 
-X button: Turn to an AprilTag with id of 154 (Camera not installed yet, doesn't work)
+Stick forward: move elevator down
 
-Y button: Move elevator to the top limit switch
+Stick backward: move elevator up
+
+Trigger: hold to close claw
+
+Button #2: elevator to bottom limit switch
+
+Button #3: elevator to top limit switch
+
+Button #4: elevator to setpoint #1
+
+Button #5 elevator to setpoint #2

@@ -18,16 +18,17 @@ public final class Constants {
         public static final int RIGHT_FRONT = 2;
         public static final int LEFT_REAR = 3;
         public static final int RIGHT_REAR = 4;
-        public static final double DRIVE_KP = 0.02;
-        public static final double DRIVE_KI = 0;
-        public static final double DRIVE_KD = 0;
+        public static final double DRIVE_KP = 0.012;
+        public static final double DRIVE_KI = 0.00009;
+        public static final double DRIVE_KD = 0.00001;
     }
 
     public static final class ElevatorConstants {
         public static final int MOTOR_ID = 5;
-        public static final double ELEVATOR_KP = 0.10843;
+        public static final double ELEVATOR_HOLD_SPEED = 0.04;
+        public static final double ELEVATOR_KP = 0.2;
         public static final double ELEVATOR_KI = 0.0000004;
-        public static final double ELEVATOR_KD = 6;
+        public static final double ELEVATOR_KD = 6.5;
     }
 
     public static final class ClawConstants {

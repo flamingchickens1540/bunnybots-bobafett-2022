@@ -15,10 +15,9 @@ public class Claw extends SubsystemBase {
     );
 
     public Claw() {
-        set(true);
     }
 
     public void set(boolean isOpen) {
-        solenoid.set(!isOpen);
+        solenoid.set(isOpen);
     }
 }

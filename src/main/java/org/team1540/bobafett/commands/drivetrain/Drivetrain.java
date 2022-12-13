@@ -17,6 +17,7 @@ public class Drivetrain extends SubsystemBase {
     private final VictorSPX[] rightDrive = {rightFront, rightRear};
     private final VictorSPX[] drive = {leftFront, rightFront, leftRear, rightRear};
     private final Pigeon2 pigeon;
+    private boolean isBrakeMode;
 
     public Drivetrain(Pigeon2 pigeon) {
         for (VictorSPX motor : leftDrive) motor.setInverted(true);
@@ -25,6 +26,7 @@ public class Drivetrain extends SubsystemBase {
         leftRear.follow(leftFront);
         rightRear.follow(rightFront);
         this.pigeon = pigeon;
+        isBrakeMode = true;
     }
 
     public Drivetrain(NeutralMode brakeType, Pigeon2 pigeon) {
@@ -34,6 +36,7 @@ public class Drivetrain extends SubsystemBase {
         leftRear.follow(leftFront);
         rightRear.follow(rightFront);
         this.pigeon = pigeon;
+        isBrakeMode = brakeType == NeutralMode.Brake;
     }
 
     public void setPercent(double left, double right) {
@@ -49,7 +52,28 @@ public class Drivetrain extends SubsystemBase {
         pigeon.setYaw(yaw);
     }
 
+    public void setBrakeMode(NeutralMode brakeMode) {
+        for (VictorSPX motor : drive) motor.setNeutralMode(brakeMode);
+        isBrakeMode = brakeMode == NeutralMode.Brake;
+    }
+
+    public void toggleBrakeMode() {
+        if (isBrakeMode) for (VictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Coast);
+        else for (VictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Brake);
+        isBrakeMode = !isBrakeMode;
+    }
+
+    public NeutralMode getBrakeType() {
+        if (isBrakeMode) return NeutralMode.Brake;
+        else return NeutralMode.Coast;
+    }
+
     public void stop() {
         setPercent(0, 0);
+    }
+
+    @Override
+    public void periodic() {
+        System.out.println(getYaw());
     }
 }
