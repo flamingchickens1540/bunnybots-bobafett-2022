@@ -23,8 +23,8 @@ using a Spark Max motor controller and a brushless motor.
 Left stick: move left side of drivetrain forwards/backwards
 
 Right stick: move right side of drivetrain forwards/backwards
-
-Left stick button: toggle brake mode
+ 
+A button: toggle brake mode
 
 Left trigger: move robot backwards
 
