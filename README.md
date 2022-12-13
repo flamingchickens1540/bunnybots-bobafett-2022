@@ -26,9 +26,9 @@ Right stick: move right side of drivetrain forwards/backwards
 
 Left stick button: toggle brake mode
 
-Left bumper: move robot backwards
+Left trigger: move robot backwards
 
-Right bumper: move robot forwards
+Right trigger: move robot forwards
 
 ### Copilot (Joystick)
 
