@@ -24,7 +24,7 @@ public class TankDrive extends CommandBase {
         double right = Math.abs(controller.getRightY()) > deadzone ? Math.pow(controller.getRightY(), 3) : 0;
         double forward = Math.abs(controller.getRightTriggerAxis()) > deadzone ? Math.pow(controller.getRightTriggerAxis(), 3) : 0;
         double backward = Math.abs(controller.getLeftTriggerAxis()) > deadzone ? Math.pow(controller.getLeftTriggerAxis(), 3) : 0;
-        drivetrain.setPercent(0.5*(left + forward + backward), 0.5*(right + forward + backward));
+        drivetrain.setPercent(0.5*(left - forward + backward), 0.5*(right - forward + backward));
     }
 
     @Override
