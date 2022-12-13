@@ -17,7 +17,7 @@ public class ElevatorCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double out = (Math.abs(joystick.getY()) > deadzone) ? 0.5*joystick.getY() : 0;
-        elevator.setPercent(out + Constants.ElevatorConstants.ELEVATOR_HOLD_SPEED);
+        double out = (Math.abs(joystick.getY()) > deadzone) ? joystick.getY() : 0;
+        elevator.setPercent(0.5*Math.pow(out, 3) + Constants.ElevatorConstants.ELEVATOR_HOLD_SPEED);
     }
 }

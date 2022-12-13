@@ -1,5 +1,6 @@
 package org.team1540.bobafett.commands.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -14,12 +15,14 @@ public class PigeonTurn extends CommandBase {
             SmartDashboard.getNumber("Drivetrain/kI", Constants.DriveConstants.DRIVE_KI),
             SmartDashboard.getNumber("Drivetrain/kD", Constants.DriveConstants.DRIVE_KD)
     );
+    private NeutralMode originalBrakeMode;
 
     public PigeonTurn(Drivetrain drivetrain, double degrees) {
         this.drivetrain = drivetrain;
         setpoint = degrees;
         addRequirements(drivetrain);
         pidController.setSetpoint(degrees);
+        drivetrain.setBrakeMode(NeutralMode.Brake);
         SmartDashboard.putNumber("Drivetrain/kP", Constants.DriveConstants.DRIVE_KP);
         SmartDashboard.putNumber("Drivetrain/kI", Constants.DriveConstants.DRIVE_KI);
         SmartDashboard.putNumber("Drivetrain/kD", Constants.DriveConstants.DRIVE_KD);
@@ -27,6 +30,7 @@ public class PigeonTurn extends CommandBase {
 
     public void initialize() {
         drivetrain.setYaw(0);
+        originalBrakeMode = drivetrain.getBrakeType();
     }
 
     public void execute() {
@@ -43,5 +47,6 @@ public class PigeonTurn extends CommandBase {
 
     public void end(boolean interrupted) {
         drivetrain.stop();
+        drivetrain.setBrakeMode(originalBrakeMode);
     }
 }

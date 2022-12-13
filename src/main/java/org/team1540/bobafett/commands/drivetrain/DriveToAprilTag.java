@@ -1,5 +1,6 @@
 package org.team1540.bobafett.commands.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.team1540.bobafett.Constants;
@@ -15,6 +16,7 @@ public class DriveToAprilTag extends CommandBase {
     private final ChickenPhotonCamera camera;
     private final int targetID;
     private PhotonTrackedTarget aprilTag;
+    private NeutralMode originalBrakeMode;
 
     public DriveToAprilTag(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetID) {
         this.drivetrain = drivetrain;
@@ -27,6 +29,8 @@ public class DriveToAprilTag extends CommandBase {
     public void initialize() {
         aprilTag = camera.getTarget(targetID);
         if (aprilTag != null) drivetrain.setPercent(0.5, 0.5);
+        originalBrakeMode = drivetrain.getBrakeType();
+        drivetrain.setBrakeMode(NeutralMode.Brake);
     }
 
     @Override
@@ -37,5 +41,6 @@ public class DriveToAprilTag extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         drivetrain.stop();
+        drivetrain.setBrakeMode(originalBrakeMode);
     }
 }

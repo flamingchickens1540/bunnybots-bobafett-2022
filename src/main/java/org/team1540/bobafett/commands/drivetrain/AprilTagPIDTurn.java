@@ -1,5 +1,6 @@
 package org.team1540.bobafett.commands.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -19,6 +20,7 @@ public class AprilTagPIDTurn extends CommandBase {
             Constants.DriveConstants.DRIVE_KP, Constants.DriveConstants.DRIVE_KI, Constants.DriveConstants.DRIVE_KD);
     private final int targetId;
     private double setpoint;
+    private NeutralMode originalBrakeMode;
 
     public AprilTagPIDTurn(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetId) {
         this.drivetrain = drivetrain;
@@ -38,6 +40,8 @@ public class AprilTagPIDTurn extends CommandBase {
         if (target != null) {
             setpoint = target.getYaw();
         } else setpoint = drivetrain.getYaw(); // Set setpoint to current heading if no target is found
+        originalBrakeMode = drivetrain.getBrakeType();
+        drivetrain.setBrakeMode(NeutralMode.Brake);
     }
 
     /** If we are not within 1.5 degrees of the target and if we have found a target,
@@ -58,5 +62,6 @@ public class AprilTagPIDTurn extends CommandBase {
     @Override
     public void end(boolean isInterrupted) {
         drivetrain.stop();
+        drivetrain.setBrakeMode(originalBrakeMode);
     }
 }
