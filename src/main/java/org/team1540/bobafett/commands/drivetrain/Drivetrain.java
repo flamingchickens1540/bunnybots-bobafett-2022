@@ -52,4 +52,9 @@ public class Drivetrain extends SubsystemBase {
     public void stop() {
         setPercent(0, 0);
     }
+
+    @Override
+    public void periodic() {
+        System.out.println(getYaw());
+    }
 }

@@ -37,9 +37,9 @@ public class PigeonTurn extends CommandBase {
         pidController.setD(SmartDashboard.getNumber("Drivetrain/kD", Constants.DriveConstants.DRIVE_KD));
     }
 
-    public boolean isFinished() {
-        return Math.abs(drivetrain.getYaw() - setpoint) < 1.5;
-    }
+    //public boolean isFinished() {
+    //   return Math.abs(drivetrain.getYaw() - setpoint) < 1.5;
+    //}
 
     public void end(boolean interrupted) {
         drivetrain.stop();

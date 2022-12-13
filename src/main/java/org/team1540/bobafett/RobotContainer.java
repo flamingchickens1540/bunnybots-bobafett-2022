@@ -5,15 +5,15 @@
 package org.team1540.bobafett;
 
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.team1540.bobafett.commands.claw.*;
 import org.team1540.bobafett.commands.drivetrain.*;
 import org.team1540.bobafett.commands.elevator.*;
-import org.team1540.bobafett.utils.ChickenPhotonCamera;
+import org.team1540.bobafett.utils.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,7 +26,8 @@ public class RobotContainer {
     private final Pigeon2 pigeon = new Pigeon2(0);
     private final Drivetrain drivetrain = new Drivetrain(pigeon);
     private final ChickenPhotonCamera camera = new ChickenPhotonCamera(Constants.VisionConstants.CAMERA_NAME);
-    private final XboxController controller = new XboxController(0);
+    private final XboxController pilotController = new XboxController(0);
+    private final Joystick copilotController = new Joystick(1);
     final Claw claw = new Claw();
     private final Elevator elevator = new Elevator();
 
@@ -34,7 +35,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        drivetrain.setDefaultCommand(new TankDrive(drivetrain, controller));
+        elevator.setDefaultCommand(new ElevatorCommand(elevator, copilotController));
+        drivetrain.setDefaultCommand(new TankDrive(drivetrain, pilotController));
     }
 
     /**
@@ -44,17 +46,22 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new JoystickButton(controller, XboxController.Button.kX.value)
-                .whenPressed(new PigeonTurn(drivetrain, 90));
-        new JoystickButton(controller, XboxController.Button.kB.value)
+        new JoystickButton(pilotController, XboxController.Button.kX.value)
+                .whileActiveContinuous(new PigeonTurn(drivetrain, 90));
+
+        new JoystickButton(copilotController, 1)
                 .whileActiveContinuous(new CloseClaw(claw));
-        new JoystickButton(controller, XboxController.Button.kY.value)
+
+        new JoystickButton(copilotController, 3)
                 .whenPressed(new MoveToTop(elevator));
-        new JoystickButton(controller, XboxController.Button.kLeftBumper.value)
-                .whenPressed(() -> elevator.setPidReference(60, CANSparkMax.ControlType.kPosition)); // TODO adjust setpoints
-        new JoystickButton(controller, XboxController.Button.kRightBumper.value)
-                .whenPressed(() -> elevator.setPidReference(100, CANSparkMax.ControlType.kPosition));
-        new JoystickButton(controller, XboxController.Button.kA.value)
+
+        new JoystickButton(copilotController, 4)
+                .whenPressed(new ElevatorPID(elevator, 60)); // TODO adjust setpoints
+
+        new JoystickButton(copilotController, 5)
+                .whenPressed(new ElevatorPID(elevator, 100));
+
+        new JoystickButton(copilotController, 2)
                 .whenPressed(new MoveToBottom(elevator));
     }
 
