@@ -2,6 +2,7 @@ package org.team1540.bobafett.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.team1540.bobafett.commands.elevator.Elevator;
 
 /**
  * Standard drive, left stick controls left side of drivetrain, right stick controls right side.
@@ -10,10 +11,12 @@ public class TankDrive extends CommandBase {
 
     private final Drivetrain drivetrain;
     private final XboxController controller;
+    private final Elevator elevator;
     private final double deadzone = 0.15;
 
-    public TankDrive(Drivetrain drivetrain, XboxController controller) {
+    public TankDrive(Drivetrain drivetrain, Elevator elevator, XboxController controller) {
         this.drivetrain = drivetrain;
+        this.elevator = elevator;
         this.controller = controller;
         addRequirements(drivetrain);
     }
@@ -24,7 +27,8 @@ public class TankDrive extends CommandBase {
         double right = Math.abs(controller.getRightY()) > deadzone ? Math.pow(controller.getRightY(), 3) : 0;
         double forward = Math.abs(controller.getRightTriggerAxis()) > deadzone ? Math.pow(controller.getRightTriggerAxis(), 3) : 0;
         double backward = Math.abs(controller.getLeftTriggerAxis()) > deadzone ? Math.pow(controller.getLeftTriggerAxis(), 3) : 0;
-        drivetrain.setPercent(0.5*(left - forward + backward), 0.5*(right - forward + backward));
+        double multiplier = elevator.getRotations() < 60 ? 0.5 : 0.25;
+        drivetrain.setPercent(multiplier*(left - forward + backward), multiplier*(right - forward + backward));
     }
 
     @Override
