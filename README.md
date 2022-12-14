@@ -26,6 +26,8 @@ Right stick: move right side of drivetrain forwards/backwards
  
 A button: toggle brake mode
 
+X button: turn to AprilTag of id 154 (temp binding)
+
 Left trigger: move robot backwards
 
 Right trigger: move robot forwards

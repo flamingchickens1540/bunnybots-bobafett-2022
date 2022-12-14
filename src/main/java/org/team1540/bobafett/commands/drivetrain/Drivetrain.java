@@ -2,41 +2,38 @@ package org.team1540.bobafett.commands.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team1540.bobafett.Constants;
+import org.team1540.bobafett.utils.ChickenVictorSPX;
 
 public class Drivetrain extends SubsystemBase {
 
-    private final VictorSPX leftFront = new VictorSPX(Constants.DriveConstants.LEFT_FRONT);
-    private final VictorSPX rightFront = new VictorSPX(Constants.DriveConstants.RIGHT_FRONT);
-    private final VictorSPX leftRear = new VictorSPX(Constants.DriveConstants.LEFT_REAR);
-    private final VictorSPX rightRear = new VictorSPX(Constants.DriveConstants.RIGHT_REAR);
-    private final VictorSPX[] leftDrive = {leftFront, leftRear};
-    private final VictorSPX[] rightDrive = {rightFront, rightRear};
-    private final VictorSPX[] drive = {leftFront, rightFront, leftRear, rightRear};
+    private final ChickenVictorSPX leftFront = new ChickenVictorSPX(Constants.DriveConstants.LEFT_FRONT);
+    private final ChickenVictorSPX rightFront = new ChickenVictorSPX(Constants.DriveConstants.RIGHT_FRONT);
+    private final ChickenVictorSPX leftRear = new ChickenVictorSPX(Constants.DriveConstants.LEFT_REAR);
+    private final ChickenVictorSPX rightRear = new ChickenVictorSPX(Constants.DriveConstants.RIGHT_REAR);
+    private final ChickenVictorSPX[] leftDrive = {leftFront, leftRear};
+    private final ChickenVictorSPX[] rightDrive = {rightFront, rightRear};
+    private final ChickenVictorSPX[] drive = {leftFront, rightFront, leftRear, rightRear};
     private final Pigeon2 pigeon;
-    private boolean isBrakeMode;
 
     public Drivetrain(Pigeon2 pigeon) {
-        for (VictorSPX motor : leftDrive) motor.setInverted(true);
-        for (VictorSPX motor : rightDrive) motor.setInverted(false);
-        for (VictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Brake);
+        for (ChickenVictorSPX motor : leftDrive) motor.setInverted(true);
+        for (ChickenVictorSPX motor : rightDrive) motor.setInverted(false);
+        for (ChickenVictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Brake);
         leftRear.follow(leftFront);
         rightRear.follow(rightFront);
         this.pigeon = pigeon;
-        isBrakeMode = true;
     }
 
     public Drivetrain(NeutralMode brakeType, Pigeon2 pigeon) {
-        for (VictorSPX motor : leftDrive) motor.setInverted(true);
-        for (VictorSPX motor : rightDrive) motor.setInverted(false);
-        for (VictorSPX motor : drive) motor.setNeutralMode(brakeType);
+        for (ChickenVictorSPX motor : leftDrive) motor.setInverted(true);
+        for (ChickenVictorSPX motor : rightDrive) motor.setInverted(false);
+        for (ChickenVictorSPX motor : drive) motor.setNeutralMode(brakeType);
         leftRear.follow(leftFront);
         rightRear.follow(rightFront);
         this.pigeon = pigeon;
-        isBrakeMode = brakeType == NeutralMode.Brake;
     }
 
     public void setPercent(double left, double right) {
@@ -53,19 +50,17 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setBrakeMode(NeutralMode brakeMode) {
-        for (VictorSPX motor : drive) motor.setNeutralMode(brakeMode);
-        isBrakeMode = brakeMode == NeutralMode.Brake;
+        for (ChickenVictorSPX motor : drive) motor.setNeutralMode(brakeMode);
     }
 
     public void toggleBrakeMode() {
-        if (isBrakeMode) for (VictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Coast);
-        else for (VictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Brake);
-        isBrakeMode = !isBrakeMode;
+        if (leftFront.getNeutralMode() == NeutralMode.Brake)
+            for (ChickenVictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Coast);
+        else for (ChickenVictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public NeutralMode getBrakeType() {
-        if (isBrakeMode) return NeutralMode.Brake;
-        else return NeutralMode.Coast;
+    public NeutralMode getBrakeMode() {
+        return leftFront.getNeutralMode();
     }
 
     public void stop() {
