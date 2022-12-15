@@ -19,8 +19,8 @@ public class Drivetrain extends SubsystemBase {
     private final Pigeon2 pigeon;
 
     public Drivetrain(Pigeon2 pigeon) {
-        for (ChickenVictorSPX motor : leftDrive) motor.setInverted(true);
-        for (ChickenVictorSPX motor : rightDrive) motor.setInverted(false);
+        for (ChickenVictorSPX motor : leftDrive) motor.setInverted(false);
+        for (ChickenVictorSPX motor : rightDrive) motor.setInverted(true);
         for (ChickenVictorSPX motor : drive) motor.setNeutralMode(NeutralMode.Brake);
         leftRear.follow(leftFront);
         rightRear.follow(rightFront);
@@ -28,8 +28,8 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public Drivetrain(NeutralMode brakeType, Pigeon2 pigeon) {
-        for (ChickenVictorSPX motor : leftDrive) motor.setInverted(true);
-        for (ChickenVictorSPX motor : rightDrive) motor.setInverted(false);
+        for (ChickenVictorSPX motor : leftDrive) motor.setInverted(false);
+        for (ChickenVictorSPX motor : rightDrive) motor.setInverted(true);
         for (ChickenVictorSPX motor : drive) motor.setNeutralMode(brakeType);
         leftRear.follow(leftFront);
         rightRear.follow(rightFront);
@@ -69,6 +69,5 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println(getYaw());
     }
 }

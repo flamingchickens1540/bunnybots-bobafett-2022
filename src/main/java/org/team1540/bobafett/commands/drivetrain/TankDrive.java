@@ -28,7 +28,7 @@ public class TankDrive extends CommandBase {
         double forward = Math.abs(controller.getRightTriggerAxis()) > deadzone ? Math.pow(controller.getRightTriggerAxis(), 3) : 0;
         double backward = Math.abs(controller.getLeftTriggerAxis()) > deadzone ? Math.pow(controller.getLeftTriggerAxis(), 3) : 0;
         double multiplier = elevator.getRotations() < 60 ? 0.5 : 0.25;
-        drivetrain.setPercent(multiplier*(left - forward + backward), multiplier*(right - forward + backward));
+        drivetrain.setPercent(multiplier*(-1*left + forward - backward), multiplier*(-1*right + forward - backward));
     }
 
     @Override

@@ -16,7 +16,7 @@ public class AprilTagPIDTurn extends CommandBase {
 
     private final Drivetrain drivetrain;
     private final ChickenPhotonCamera camera;
-    private final PIDController pid = new PIDController(
+    private final PIDController pidController = new PIDController(
             Constants.DriveConstants.DRIVE_KP, Constants.DriveConstants.DRIVE_KI, Constants.DriveConstants.DRIVE_KD);
     private final int targetId;
     private double setpoint;
@@ -38,9 +38,9 @@ public class AprilTagPIDTurn extends CommandBase {
         drivetrain.setYaw(0);
         PhotonTrackedTarget target = camera.getTarget(targetId);
         if (target != null) {
-            setpoint = target.getYaw();
+            setpoint = -1 * target.getYaw();
         } else setpoint = drivetrain.getYaw(); // Set setpoint to current heading if no target is found
-        originalBrakeMode = drivetrain.getBrakeType();
+        originalBrakeMode = drivetrain.getBrakeMode();
         drivetrain.setBrakeMode(NeutralMode.Brake);
     }
 
@@ -50,13 +50,13 @@ public class AprilTagPIDTurn extends CommandBase {
      */
     @Override
     public void execute() {
-        double output = pid.calculate(drivetrain.getYaw(), setpoint);
-        drivetrain.setPercent(output, -1*output);
+        double output = pidController.calculate(drivetrain.getYaw(), setpoint);
+        drivetrain.setPercent(-1*output, output);
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(drivetrain.getYaw() - targetId) < 1.5;
+        return false;//Math.abs(drivetrain.getYaw() - targetId) < 1.5;
     }
 
     @Override
