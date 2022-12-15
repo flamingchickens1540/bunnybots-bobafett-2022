@@ -2,6 +2,7 @@ package org.team1540.bobafett.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.team1540.bobafett.Constants;
 import org.team1540.bobafett.commands.elevator.Elevator;
 
 /**
@@ -27,7 +28,7 @@ public class TankDrive extends CommandBase {
         double right = Math.abs(controller.getRightY()) > deadzone ? Math.pow(controller.getRightY(), 3) : 0;
         double forward = Math.abs(controller.getRightTriggerAxis()) > deadzone ? Math.pow(controller.getRightTriggerAxis(), 3) : 0;
         double backward = Math.abs(controller.getLeftTriggerAxis()) > deadzone ? Math.pow(controller.getLeftTriggerAxis(), 3) : 0;
-        double multiplier = elevator.getRotations() < 60 ? 0.5 : 0.25;
+        double multiplier = 0.5 - ((0.3 * elevator.getRotations())/Constants.ElevatorConstants.ELEVATOR_ROTS_TO_TOP);
         drivetrain.setPercent(multiplier*(-1*left + forward - backward), multiplier*(-1*right + forward - backward));
     }
 

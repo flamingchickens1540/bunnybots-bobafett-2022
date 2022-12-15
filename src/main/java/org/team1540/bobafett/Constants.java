@@ -29,6 +29,7 @@ public final class Constants {
         public static final double ELEVATOR_KP = 0.2;
         public static final double ELEVATOR_KI = 0.0000004;
         public static final double ELEVATOR_KD = 6.5;
+        public static final double ELEVATOR_ROTS_TO_TOP = 127.23;
     }
 
     public static final class ClawConstants {
