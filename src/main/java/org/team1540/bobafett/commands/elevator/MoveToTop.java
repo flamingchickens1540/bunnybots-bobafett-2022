@@ -1,6 +1,7 @@
 package org.team1540.bobafett.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.team1540.bobafett.Constants;
 
 public class MoveToTop extends CommandBase {
 
@@ -23,6 +24,6 @@ public class MoveToTop extends CommandBase {
 
     @Override
     public void end(boolean isInterrupted) {
-        elevator.hold();
+        elevator.setPercent(Constants.ElevatorConstants.ELEVATOR_HOLD_SPEED); // I dislike the jittering at the top
     }
 }
