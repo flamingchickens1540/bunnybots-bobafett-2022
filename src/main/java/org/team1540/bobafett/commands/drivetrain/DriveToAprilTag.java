@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.photonvision.targeting.PhotonTrackedTarget;
-import org.team1540.bobafett.Constants;
+import org.team1540.bobafett.Constants.*;
 import org.team1540.bobafett.utils.ChickenPhotonCamera;
 
 /**
@@ -16,18 +16,20 @@ public class DriveToAprilTag extends CommandBase {
     private final Drivetrain drivetrain;
     private final ChickenPhotonCamera camera;
     private final int targetID;
+    private final double targetArea;
     private PhotonTrackedTarget aprilTag;
     private NeutralMode originalBrakeMode;
     private final PIDController pidController = new PIDController(
-            Constants.DriveConstants.DRIVE_KP,
-            Constants.DriveConstants.DRIVE_KI,
-            Constants.DriveConstants.DRIVE_KD
+            DriveConstants.DRIVE_KP,
+            DriveConstants.DRIVE_KI,
+            DriveConstants.DRIVE_KD
     );
 
-    public DriveToAprilTag(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetID) {
+    public DriveToAprilTag(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetID, double targetArea) {
         this.drivetrain = drivetrain;
         this.camera = camera;
         this.targetID = targetID;
+        this.targetArea = targetArea;
         addRequirements(drivetrain);
     }
 
@@ -49,7 +51,7 @@ public class DriveToAprilTag extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return aprilTag == null || aprilTag.getArea() >= Constants.VisionConstants.APRIL_TAG_AREA;
+        return aprilTag == null || aprilTag.getArea() >= targetArea;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.photonvision.targeting.PhotonTrackedTarget;
-import org.team1540.bobafett.Constants;
+import org.team1540.bobafett.Constants.*;
 import org.team1540.bobafett.utils.ChickenPhotonCamera;
 
 /**
@@ -12,17 +12,17 @@ import org.team1540.bobafett.utils.ChickenPhotonCamera;
  * using a PID controller. Uses a Pigeon 2.0 for rotational sensing.
  */
 
-public class AprilTagPIDTurn extends CommandBase {
+public class TurnToAprilTag extends CommandBase {
 
     private final Drivetrain drivetrain;
     private final ChickenPhotonCamera camera;
     private final PIDController pidController = new PIDController(
-            Constants.DriveConstants.DRIVE_KP, Constants.DriveConstants.DRIVE_KI, Constants.DriveConstants.DRIVE_KD);
+            DriveConstants.DRIVE_KP, DriveConstants.DRIVE_KI, DriveConstants.DRIVE_KD);
     private final int targetId;
     private double setpoint;
     private NeutralMode originalBrakeMode;
 
-    public AprilTagPIDTurn(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetId) {
+    public TurnToAprilTag(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetId) {
         this.drivetrain = drivetrain;
         this.camera = camera;
         this.setpoint = drivetrain.getYaw();
