@@ -36,7 +36,7 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
         elevator.setDefaultCommand(new ElevatorCommand(elevator, copilotController));
-        drivetrain.setDefaultCommand(new TankDrive(drivetrain, pilotController));
+        drivetrain.setDefaultCommand(new TankDrive(drivetrain, elevator, pilotController));
     }
 
     /**
@@ -47,7 +47,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         new JoystickButton(pilotController, XboxController.Button.kX.value)
-                .whileActiveContinuous(new PigeonTurn(drivetrain, 90));
+                .whileActiveContinuous(new AprilTagPIDTurn(drivetrain, camera, 15));
 
         new JoystickButton(pilotController, XboxController.Button.kA.value)
                 .whenPressed(drivetrain::toggleBrakeMode);
@@ -74,6 +74,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new Auto(drivetrain, elevator, camera);
+        return new PlaceTube(drivetrain, elevator, claw);
     }
 }

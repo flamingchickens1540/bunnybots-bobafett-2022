@@ -23,12 +23,14 @@ using a Spark Max motor controller and a brushless motor.
 Left stick: move left side of drivetrain forwards/backwards
 
 Right stick: move right side of drivetrain forwards/backwards
+ 
+A button: toggle brake mode
 
-Left stick button: toggle brake mode
+X button: DO NOT PRESS HAS TEMP TESTING CODE
 
-Left bumper: move robot backwards
+Left trigger: move robot backwards
 
-Right bumper: move robot forwards
+Right trigger: move robot forwards
 
 ### Copilot (Joystick)
 
