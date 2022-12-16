@@ -2,10 +2,12 @@ package org.team1540.bobafett.commands.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.team1540.bobafett.Constants.*;
 import org.team1540.bobafett.utils.ChickenPhotonCamera;
+import org.team1540.bobafett.utils.RollingAverage;
 
 /**
  * Command for turning the robot towards an AprilTag with a specified fiducial ID
@@ -19,6 +21,7 @@ public class TurnToAprilTag extends CommandBase {
     private final PIDController pidController = new PIDController(
             DriveConstants.DRIVE_KP, DriveConstants.DRIVE_KI, DriveConstants.DRIVE_KD);
     private final int targetId;
+    private final RollingAverage rollingAverage;
     private double setpoint;
     private NeutralMode originalBrakeMode;
 
@@ -27,6 +30,7 @@ public class TurnToAprilTag extends CommandBase {
         this.camera = camera;
         this.setpoint = drivetrain.getYaw();
         this.targetId = targetId;
+        this.rollingAverage = new RollingAverage(10);
         addRequirements(drivetrain);
     }
 
@@ -51,12 +55,18 @@ public class TurnToAprilTag extends CommandBase {
     @Override
     public void execute() {
         double output = pidController.calculate(drivetrain.getYaw(), setpoint);
+        rollingAverage.add(Math.abs(drivetrain.getYaw() - setpoint));
         drivetrain.setPercent(-1*output, output);
+        pidController.setPID(
+                SmartDashboard.getNumber("Drivetrain/kP", DriveConstants.DRIVE_KP),
+                SmartDashboard.getNumber("Drivetrain/kI", DriveConstants.DRIVE_KI),
+                SmartDashboard.getNumber("Drivetrain/kD", DriveConstants.DRIVE_KD)
+        );
     }
 
     @Override
     public boolean isFinished() {
-        return false;//Math.abs(drivetrain.getYaw() - targetId) < 1.5;
+        return rollingAverage.getAverage() < 1;
     }
 
     @Override
