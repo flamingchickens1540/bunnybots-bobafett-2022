@@ -47,7 +47,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         new JoystickButton(pilotController, XboxController.Button.kX.value)
-                .whileActiveContinuous(new AprilTagPIDTurn(drivetrain, camera, 15));
+                .whileActiveContinuous(new ApproachAprilTag(drivetrain, camera));
 
         new JoystickButton(pilotController, XboxController.Button.kA.value)
                 .whenPressed(drivetrain::toggleBrakeMode);

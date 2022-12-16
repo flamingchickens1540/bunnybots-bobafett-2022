@@ -18,9 +18,9 @@ public final class Constants {
         public static final int RIGHT_FRONT = 2;
         public static final int LEFT_REAR = 3;
         public static final int RIGHT_REAR = 4;
-        public static final double DRIVE_KP = 0.03;
-        public static final double DRIVE_KI = 0;
-        public static final double DRIVE_KD = 0.0007;
+        public static final double DRIVE_KP = 0.02;
+        public static final double DRIVE_KI = 0.05;
+        public static final double DRIVE_KD = 0.01;
     }
 
     public static final class ElevatorConstants {
@@ -38,7 +38,7 @@ public final class Constants {
 
     public static final class VisionConstants{
         public static final String CAMERA_NAME = "Microsoft_LifeCam_HD-3000"; // WHY
-        public static final int APRIL_TAG_ID = 154;
-        public static final int APRIL_TAG_AREA = 15;
+        public static final int APRIL_TAG_ID = 15;
+        public static final double APRIL_TAG_AREA = 0.2;
     }
 }
