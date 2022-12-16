@@ -8,11 +8,13 @@ public class ChickenVictorSPX extends VictorSPX {
     private NeutralMode neutralMode;
     /**
      * Constructor
-     *
+     * Initializes the motor to brake mode
      * @param deviceNumber [0,62]
      */
     public ChickenVictorSPX(int deviceNumber) {
         super(deviceNumber);
+        setNeutralMode(NeutralMode.Brake);
+        neutralMode = NeutralMode.Brake;
     }
 
     @Override
