@@ -4,29 +4,32 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.photonvision.targeting.PhotonTrackedTarget;
-import org.team1540.bobafett.Constants;
+import org.team1540.bobafett.Constants.*;
 import org.team1540.bobafett.utils.ChickenPhotonCamera;
+import org.team1540.bobafett.utils.RollingAverage;
 
 /**
  * Command for turning the robot towards an AprilTag with a specified fiducial ID
  * using a PID controller. Uses a Pigeon 2.0 for rotational sensing.
  */
 
-public class AprilTagPIDTurn extends CommandBase {
+public class TurnToAprilTag extends CommandBase {
 
     private final Drivetrain drivetrain;
     private final ChickenPhotonCamera camera;
     private final PIDController pidController = new PIDController(
-            Constants.DriveConstants.DRIVE_KP, Constants.DriveConstants.DRIVE_KI, Constants.DriveConstants.DRIVE_KD);
+            DriveConstants.DRIVE_KP, DriveConstants.DRIVE_KI, DriveConstants.DRIVE_KD);
     private final int targetId;
+    private final RollingAverage rollingAverage;
     private double setpoint;
     private NeutralMode originalBrakeMode;
 
-    public AprilTagPIDTurn(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetId) {
+    public TurnToAprilTag(Drivetrain drivetrain, ChickenPhotonCamera camera, int targetId) {
         this.drivetrain = drivetrain;
         this.camera = camera;
         this.setpoint = drivetrain.getYaw();
         this.targetId = targetId;
+        this.rollingAverage = new RollingAverage(10);
         addRequirements(drivetrain);
     }
 
@@ -51,12 +54,13 @@ public class AprilTagPIDTurn extends CommandBase {
     @Override
     public void execute() {
         double output = pidController.calculate(drivetrain.getYaw(), setpoint);
+        rollingAverage.add(Math.abs(drivetrain.getYaw() - setpoint));
         drivetrain.setPercent(-1*output, output);
     }
 
     @Override
     public boolean isFinished() {
-        return false;//Math.abs(drivetrain.getYaw() - targetId) < 1.5;
+        return rollingAverage.getAverage() < 2;
     }
 
     @Override

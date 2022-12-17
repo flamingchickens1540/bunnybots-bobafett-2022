@@ -46,9 +46,6 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new JoystickButton(pilotController, XboxController.Button.kX.value)
-                .whileActiveContinuous(new AprilTagPIDTurn(drivetrain, camera, 15));
-
         new JoystickButton(pilotController, XboxController.Button.kA.value)
                 .whenPressed(drivetrain::toggleBrakeMode);
 
@@ -62,7 +59,7 @@ public class RobotContainer {
                 .whenPressed(new ElevatorPID(elevator, 60)); // TODO adjust setpoints
 
         new JoystickButton(copilotController, 5)
-                .whenPressed(new ElevatorPID(elevator, 100));
+                .whenPressed(new ElevatorPID(elevator, 110));
 
         new JoystickButton(copilotController, 2)
                 .whenPressed(new MoveToBottom(elevator));
@@ -74,6 +71,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new PlaceTube(drivetrain, elevator, claw);
+        return new SingleTubeAuto(drivetrain, elevator, camera, claw);
     }
 }

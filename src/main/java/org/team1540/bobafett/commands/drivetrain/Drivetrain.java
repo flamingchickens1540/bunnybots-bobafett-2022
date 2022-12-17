@@ -4,15 +4,15 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.team1540.bobafett.Constants;
+import org.team1540.bobafett.Constants.*;
 import org.team1540.bobafett.utils.ChickenVictorSPX;
 
 public class Drivetrain extends SubsystemBase {
 
-    private final ChickenVictorSPX leftFront = new ChickenVictorSPX(Constants.DriveConstants.LEFT_FRONT);
-    private final ChickenVictorSPX rightFront = new ChickenVictorSPX(Constants.DriveConstants.RIGHT_FRONT);
-    private final ChickenVictorSPX leftRear = new ChickenVictorSPX(Constants.DriveConstants.LEFT_REAR);
-    private final ChickenVictorSPX rightRear = new ChickenVictorSPX(Constants.DriveConstants.RIGHT_REAR);
+    private final ChickenVictorSPX leftFront = new ChickenVictorSPX(DriveConstants.LEFT_FRONT);
+    private final ChickenVictorSPX rightFront = new ChickenVictorSPX(DriveConstants.RIGHT_FRONT);
+    private final ChickenVictorSPX leftRear = new ChickenVictorSPX(DriveConstants.LEFT_REAR);
+    private final ChickenVictorSPX rightRear = new ChickenVictorSPX(DriveConstants.RIGHT_REAR);
     private final ChickenVictorSPX[] leftDrive = {leftFront, leftRear};
     private final ChickenVictorSPX[] rightDrive = {rightFront, rightRear};
     private final ChickenVictorSPX[] drive = {leftFront, rightFront, leftRear, rightRear};
