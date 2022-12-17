@@ -14,7 +14,7 @@ is used to grab tubes and bunnies.
 ### Elevator
 
 The [elevator subsystem](src/main/java/org/team1540/bobafett/commands/elevator/Elevator.java) is a motorized elevator 
-using a Spark Max motor controller and a brushless motor.
+using a Spark Max motor controller and a brushless Neo 550 motor.
 
 ## Controller Bindings
 
@@ -25,8 +25,6 @@ Left stick: move left side of drivetrain forwards/backwards
 Right stick: move right side of drivetrain forwards/backwards
  
 A button: toggle brake mode
-
-X button: DO NOT PRESS HAS TEMP TESTING CODE
 
 Left trigger: move robot backwards
 
