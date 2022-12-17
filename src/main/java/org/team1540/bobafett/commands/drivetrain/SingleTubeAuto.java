@@ -16,7 +16,7 @@ public class SingleTubeAuto extends SequentialCommandGroup {
                 new WaitCommand(0.5),
 
                 // Place tube in the top bin
-                new PlaceTube(drivetrain, elevator, claw)
+                new PlaceTube(drivetrain, elevator, camera, claw)
         );
     }
 }

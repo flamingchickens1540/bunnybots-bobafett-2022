@@ -16,7 +16,7 @@ public class Elevator extends SubsystemBase {
     public Elevator() {
         motor.setInverted(true);
         motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        motor.setSmartCurrentLimit(40);
+        motor.setSmartCurrentLimit(30);
         encoder.setPosition(0);
         // Initialize PID constants
         pidController.setP(ElevatorConstants.ELEVATOR_KP);

@@ -2,7 +2,6 @@ package org.team1540.bobafett.commands.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.team1540.bobafett.Constants.*;
@@ -57,16 +56,11 @@ public class TurnToAprilTag extends CommandBase {
         double output = pidController.calculate(drivetrain.getYaw(), setpoint);
         rollingAverage.add(Math.abs(drivetrain.getYaw() - setpoint));
         drivetrain.setPercent(-1*output, output);
-        pidController.setPID(
-                SmartDashboard.getNumber("Drivetrain/kP", DriveConstants.DRIVE_KP),
-                SmartDashboard.getNumber("Drivetrain/kI", DriveConstants.DRIVE_KI),
-                SmartDashboard.getNumber("Drivetrain/kD", DriveConstants.DRIVE_KD)
-        );
     }
 
     @Override
     public boolean isFinished() {
-        return rollingAverage.getAverage() < 1;
+        return rollingAverage.getAverage() < 2;
     }
 
     @Override
